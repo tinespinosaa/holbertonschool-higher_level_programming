@@ -1,19 +1,13 @@
 #!/usr/bin/python3
 """
-Write a class LockedClass with no
-class or object attribute
+Locked Class with no class or object attributte
+That prevents the user from dinamically creating
+new instance attribute is called first_name
 """
 
 
-class LockedClass:
+class LockedClass():
     """
-    the class LockedClass
+    Locked class
     """
     __slots__ = ["first_name"]
-
-    def __init__(self, first_name=""):
-        """
-        initialized arguments
-        """
-        self.first_name = first_name
-
