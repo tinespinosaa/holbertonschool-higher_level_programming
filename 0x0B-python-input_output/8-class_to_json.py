@@ -1,13 +1,12 @@
-
-   
 #!/usr/bin/python3
-"""
-Implements the class_to_json function
-"""
+"""Module 8-class_to_json.py"""
 
 
 def class_to_json(obj):
+    """Creates a dict description of obj
+    Args:
+        - obj: object to serialize
+    Returns: dictionnary description of obj
     """
-        Returns the dict representation of a class
-    """
-    return (getattr(obj, "__dict__"))
+
+    return obj.__dict__
