@@ -1,11 +1,11 @@
 #!/usr/bin/node
-let i = 0;
 
-if (process.argv.length === 2) {
-  console.log('Missing number of occurrences');
-} else {
-  while (i < parseInt(process.argv[2], 10)) {
-    console.log('C is fun');
-    i++;
+exports.nbOccurences = function (list, searchElement) {
+  let count = 0;
+  for (let i = 0; i < list.length; i++) {
+    if (list[i] === searchElement) {
+      count++;
+    }
   }
-}
+  return count;
+};
