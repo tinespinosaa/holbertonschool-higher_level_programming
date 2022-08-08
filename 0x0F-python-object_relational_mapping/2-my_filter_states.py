@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 
-"""Takes an argument and displays all states"""
+""" takes in an argument and displays all values in the states table """
 
 import MySQLdb
 from sys import argv
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(
-        host='localhost',
-        user=argv[1], passwd=argv[2], db=argv[3], port=3306)
-    cursor = db.cursor()
 
-    cursor.execute("SELECT * FROM states WHERE name LIKE '{:s}' ORDER BY \
-        id ASC".format(argv[4]))
-    output = cursor.fetchall()
-    for item in output:
-        print(item)
-    cursor.close()
+if __name__ == "__main__":
+    db = MySQLdb.connect(host="localhost", port=3306,
+                         user=argv[1], passwd=argv[2],
+                         db=argv[3], charset="utf8")
+    cursor = db.cursor()
+    sql = "SELECT * FROM states WHERE name COLLATE utf8mb4_bin = '{}' "
+    sql += "ORDER BY id ASC"
+    cursor.execute(sql.format(argv[4]))
+    data = cursor.fetchall()
+    for row in data:
+        print(row)
     db.close()
