@@ -1,26 +1,20 @@
 #!/usr/bin/python3
+"""Initialize"""
+from model_state import Base, State
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import sessionmaker
+from sys import argv
 
-"""Start link class to table in database"""
 
 if __name__ == "__main__":
-    import sys
-    from model_state import Base, State
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
-
-    connection = 'mysql+mysqldb://{}:{}@localhost/{}'.format(sys.argv[1],
-                                                             sys.argv[2],
-                                                             sys.argv[3])
-    engine = create_engine(connection, pool_pre_ping=True)
-
-    AllSessions = sessionmaker(bind=engine)
-    session = AllSessions()
-
+    sql = 'mysql+mysqldb://{}:{}@localhost:3306/{}'
+    engine = create_engine(sql.format(argv[1],
+                                      argv[2], argv[3]), pool_pre_ping=True)
     Base.metadata.create_all(engine)
-
-    states = session.query(State).filter(State.name.contains('a')).\
-        order_by(State.id).all()
-    for state in states:
-        print(state)
-
+    Session = sessionmaker()
+    Session.configure(bind=engine)
+    session = Session()
+    for id, name in session.query(State.id, State.name).order_by(State.id):
+        if 'a' in name:
+            print("{}: {}".format(id, name))
     session.close()
