@@ -1,13 +1,11 @@
 #!/usr/bin/node
+const dictionary = require('./101-data').dict;
 
-const dict = require('./101-data').dict;
+const valueDict = Object.values(dictionary);
+const keyDict = Object.keys(dictionary);
 const newDict = {};
 
-Object.keys(dict).map(function (key) {
-  if (!Array.isArray(newDict[dict[key]])) {
-    newDict[dict[key]] = [];
-  }
-  newDict[dict[key]].push(key);
+valueDict.forEach(elements => {
+  newDict[elements] = keyDict.filter(key => dictionary[key] === elements);
 });
-
 console.log(newDict);
